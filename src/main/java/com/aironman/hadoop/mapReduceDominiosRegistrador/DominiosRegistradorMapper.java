@@ -16,28 +16,24 @@ public class DominiosRegistradorMapper extends Mapper<LongWritable, Text, Text, 
 	public void map(LongWritable key, Text value, Context context) throws IOException,
 			InterruptedException {
 		
-		System.out.println(" =value= " + value.toString());
-		
 		final String[] values = value.toString().split(SEPARATOR);
-		for (int i=0;i<values.length;i++)
-			System.out.println(" elem " + i + ": " + values[i]);
+		for (int i=0;i<values.length;i++){
 		/**
-		 *   ;Agente Registrador  ;Total dominios;;Agente Registrador;Total dominios;;Agente Registrador;Total dominios 
-		 * 1 ;1&1 Internet		  ;382.972;
-		 * 36;WEIS CONSULTING	  ;4.154;
-		 * 71;MESH DIGITAL LIMITED;910;
+		 * id ; Agente Registrador   ; Total dominios;
+		 * 1  ; 1&1 Internet		    ; 382.972;
+		 * 36 ; WEIS CONSULTING	    ; 4.154;
+		 * 71 ; MESH DIGITAL LIMITED ; 910;
 		 * 
 		 * */
-		final String agente = format(values[1]);
-		final String totalDominios = format(values[2]);
-		System.out.println("agente: " + agente + " tiene " + totalDominios + " dominios.");
-		
-
-		if (NumberUtils.isNumber(totalDominios.toString())) {
-			context.write(new Text(agente), new DoubleWritable(NumberUtils.toDouble(totalDominios)));
-		}
+			final String agente = format(values[1]);
+			final String totalDominios = format(values[2]);
+			
+	
+			if (NumberUtils.isNumber(totalDominios.toString() ) ) 
+				context.write(new Text(agente), new DoubleWritable(NumberUtils.toDouble(totalDominios)));
+			
+		}//del for
 	}
-
 	private String format(String value) {
 		return value.trim();
 	}

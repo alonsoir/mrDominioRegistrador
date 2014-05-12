@@ -26,7 +26,6 @@ public class DominiosRegistradorReducer extends Reducer<Text, DoubleWritable, Te
 			double _total = totalDominiosValue.get() ;
 			
 			_maxtotalDominios = Math.max(_maxtotalDominios, _total);
-//			System.out.println(" ==leido== " + _total + " _maxtotalDominios " + _maxtotalDominios);
 		}
 		// esto es para quedarme con el agente registrador que tiene el mayor
 		// numero de dominios contratados
