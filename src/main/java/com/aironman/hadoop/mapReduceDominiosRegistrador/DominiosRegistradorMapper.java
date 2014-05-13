@@ -25,12 +25,12 @@ public class DominiosRegistradorMapper extends Mapper<LongWritable, Text, Text, 
 		 * 71 ; MESH DIGITAL LIMITED ; 910;
 		 * 
 		 * */
-			final String agente = format(values[1]);
-			final String totalDominios = format(values[2]);
+			final String agent = format(values[1]);
+			final String totalDomains = format(values[2]);
 			
 	
-			if (NumberUtils.isNumber(totalDominios.toString() ) ) 
-				context.write(new Text(agente), new DoubleWritable(NumberUtils.toDouble(totalDominios)));
+			if (NumberUtils.isNumber(totalDomains.toString() ) ) 
+				context.write(new Text(agent), new DoubleWritable(NumberUtils.toDouble(totalDomains)));
 			
 		}//del for
 	}
