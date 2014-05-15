@@ -18,7 +18,7 @@ import org.apache.hadoop.util.ToolRunner;
 public class App extends Configured implements Tool 
 {
 	@Override
-	public int run(String[] args) throws Exception {
+	public int run(String[] args)  throws IOException, InterruptedException, ClassNotFoundException {
 
 		if (args.length != 2) {
 			System.err.println("DominiosRegistradorManager required params: {input file} {output dir}");
@@ -53,8 +53,13 @@ public class App extends Configured implements Tool
 		FileSystem.get(output.toUri(), getConf()).delete(output, true);
 	}
 
-	public static void main(String[] args) throws Exception {
-		ToolRunner.run(new App(), args);
+	public static void main(String[] args) {
+		try {
+			ToolRunner.run(new App(), args);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

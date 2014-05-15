@@ -1,5 +1,6 @@
 package com.aironman.hadoop.mapReduceDominiosRegistrador;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +18,15 @@ import org.junit.Test;
  */
 public class AppTest {
 
-	MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
-	ReduceDriver<Text, DoubleWritable, Text, Text> reduceDriver;
-	MapReduceDriver<LongWritable, Text, Text, DoubleWritable,Text, Text> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver=null;
+	private ReduceDriver<Text, DoubleWritable, Text, Text> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, DoubleWritable,Text, Text> mapReduceDriver;
 	
 	@Before
 	public void setUp(){
 	
-		DominiosRegistradorMapper mapper = new DominiosRegistradorMapper();
-		DominiosRegistradorReducer reducer = new DominiosRegistradorReducer();
+		final DominiosRegistradorMapper mapper = new DominiosRegistradorMapper();
+		final DominiosRegistradorReducer reducer = new DominiosRegistradorReducer();
 		mapDriver = MapDriver.newMapDriver(mapper);
 		reduceDriver = ReduceDriver.newReduceDriver(reducer);
 		mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper,reducer);
@@ -41,21 +42,22 @@ public class AppTest {
 	 * ... 
 	 * 71;MESH DIGITAL LIMITED;910;
 	 * ...
+	 * @throws IOException 
 	 * @throws Exception s
 	 * */
 	@Test
-	public void testMapper() throws Exception {
+	public void testMapper() throws IOException  {
 
-		Text val = new Text("1;1&1 Internet;382.972;");
+		final Text val = new Text("1;1&1 Internet;382.972;");
 		mapDriver.withInput(new LongWritable(), val);
 		mapDriver.withOutput(new Text("1&1 Internet"), new DoubleWritable(382.972));
 		mapDriver.runTest();
 	}
 
 	@Test
-	public void testReducer() throws Exception {
+	public void testReducer() throws IOException {
 		
-		List<DoubleWritable> milista = new ArrayList<DoubleWritable>();
+		final List<DoubleWritable> milista = new ArrayList<DoubleWritable>();
 		milista.add(new DoubleWritable(382.972));
 		milista.add(new DoubleWritable(1));
 		milista.add(new DoubleWritable(10));

@@ -17,6 +17,8 @@ public class DominiosRegistradorMapper extends Mapper<LongWritable, Text, Text, 
 			InterruptedException {
 		
 		final String[] values = value.toString().split(SEPARATOR);
+		String agent ;
+		String totalDomains;
 		for (int i=0;i<values.length;i++){
 		/**
 		 * id ; Agente Registrador   ; Total dominios;
@@ -25,12 +27,13 @@ public class DominiosRegistradorMapper extends Mapper<LongWritable, Text, Text, 
 		 * 71 ; MESH DIGITAL LIMITED ; 910;
 		 * 
 		 * */
-			final String agent = format(values[1]);
-			final String totalDomains = format(values[2]);
+			agent = format(values[1]);
+			totalDomains = format(values[2]);
 			
 	
-			if (NumberUtils.isNumber(totalDomains.toString() ) ) 
+			if (NumberUtils.isNumber(totalDomains.toString() ) ){
 				context.write(new Text(agent), new DoubleWritable(NumberUtils.toDouble(totalDomains)));
+			}
 			
 		}//del for
 	}
